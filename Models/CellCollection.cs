@@ -49,6 +49,41 @@ namespace Tetris_Razor.Models
         {
             return cells;
         }
+
+        // add a CSS class to each cell in a Row
+        public void SetCSSClass(int row, string css)
+        {
+            cells.Where(
+                c => c.Row == row
+                )
+                .ToList()
+                .ForEach(
+                c => c.CSSClass = css
+                );
+        }
+
+        // move all upper cells down
+        public void CollapseRows(List<int> rows)
+        {
+            // get all cells in collapsed rows
+            var selectedRows = cells.Where(c => rows.Contains(c.Row));
+
+            // add cells to temporary collection
+            List<Cell> toRemove = new();
+            foreach (Cell c in selectedRows)
+            {
+                toRemove.Add(c);
+            }
+
+            // remove temporary cells from real collection
+            cells.RemoveAll(c => toRemove.Contains(c));
+
+            // collapse rows
+            foreach (Cell c in cells)
+            {
+                int number = rows.Where(r => r <= c.Row).Count();
+            }
+        }
     }
 
     
