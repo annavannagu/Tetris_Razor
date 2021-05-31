@@ -82,7 +82,47 @@ namespace Tetris_Razor.Models
             foreach (Cell c in cells)
             {
                 int number = rows.Where(r => r <= c.Row).Count();
+                c.Row -= number;
             }
+        }
+
+        // get Rightmost cells in collection
+        public List<Cell> GetRightmost()
+        {
+            List<Cell> _cells = new();
+
+            foreach (Cell c in cells)
+            {
+                if (!Contains(c.Row, c.Column + 1))
+                    _cells.Add(c);
+            }
+            return _cells;
+        }
+
+        // get Leftmost cells in collection
+        public List<Cell> GetLeftmost()
+        {
+            List<Cell> _cells = new();
+
+            foreach (Cell c in cells)
+            {
+                if (!Contains(c.Row, c.Column - 1))
+                    _cells.Add(c);
+            }
+            return _cells;
+        }
+
+        // get Loweest cells in collection
+        public List<Cell> GetLowest()
+        {
+            List<Cell> _cells = new();
+
+            foreach (Cell c in cells)
+            {
+                if (!Contains(c.Row - 1, c.Column))
+                    _cells.Add(c);
+            }
+            return _cells;
         }
     }
 
